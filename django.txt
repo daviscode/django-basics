@@ -1,0 +1,42 @@
+mkdir zoezi
+cd zoezi/
+mdir pos
+mkdir pos
+cd pos
+
+sudo apt install  python3-venv
+python3 -m venv venv
+
+source venv/bin/activate 
+
+pip install django
+django-admin startproject core .
+python3 manage.py startapp sales
+pip freeze > requirement.txt
+python3 manage.py startapp purchases
+
+python3 manage.py makemigrations
+python3 manage.py migrate  OR
+python manage.py migrate
+
+
+lsof -i :8000
+kill -9 <PID>
+
+python3 manage.py runserver 8080
+
+
+python3 manage.py runserver
+
+sudo nano /etc/postgresql/16/main/pg_hba.conf
+sudo systemctl restart postgresql
+pip install graphene-django
+pip install psycopg2-binary
+
+
+
+pip freeze > requirement.txt 
+
+
+
+python3 manage.py createsuperuser
