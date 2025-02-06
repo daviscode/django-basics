@@ -123,3 +123,5 @@ CREATE TABLE Course_Student (
     FOREIGN KEY (course_id) REFERENCES Course(id) ON DELETE CASCADE,
     FOREIGN KEY (student_id) REFERENCES Student(id) ON DELETE CASCADE
 );
+
+
