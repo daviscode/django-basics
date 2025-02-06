@@ -33,10 +33,93 @@ sudo systemctl restart postgresql
 pip install graphene-django
 pip install psycopg2-binary
 
-
+pip install -r requirements.txt
 
 pip freeze > requirement.txt 
 
 
 
 python3 manage.py createsuperuser
+
+
+
+
+OneToOne  
+from django.db import models
+
+class Team(models.Model):
+    name = models.CharField(max_length=100)
+    logo = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Coach(models.Model):
+    name = models.CharField(max_length=100)
+    team = models.OneToOneField(Team, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return self.name
+
+OneToMany
+from django.db import models
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    bio = models.TextField(blank=True, null=True)
+    birth_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    publication_date = models.DateField()
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books')
+    isbn = models.CharField(max_length=13, unique=True)
+
+    def __str__(self):
+        return self.title
+
+
+ManyToMany
+from django.db import models
+
+class Course(models.Model):
+    course_name = models.CharField(max_length=100)
+    code = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.course_name
+
+class Student(models.Model):
+    st_name = models.CharField(max_length=100)
+    dob = models.DateField(null=True, blank=True)
+    courses = models.ManyToManyField(Course, related_name='students')
+
+    def __str__(self):
+        return self.st_name
+
+eg:
+-- Create the Course table
+CREATE TABLE Course (
+    id SERIAL PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    code VARCHAR(10) NOT NULL UNIQUE
+);
+
+-- Create the Student table
+CREATE TABLE Student (
+    id SERIAL PRIMARY KEY,
+    st_name VARCHAR(100) NOT NULL,
+    dob DATE
+);
+
+-- Create the junction table for the many-to-many relationship
+CREATE TABLE Course_Student (
+    course_id INT NOT NULL,
+    student_id INT NOT NULL,
+    PRIMARY KEY (course_id, student_id),
+    FOREIGN KEY (course_id) REFERENCES Course(id) ON DELETE CASCADE,
+    FOREIGN KEY (student_id) REFERENCES Student(id) ON DELETE CASCADE
+);
