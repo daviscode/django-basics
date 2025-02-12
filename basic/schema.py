@@ -9,6 +9,14 @@ class CurrencyType(DjangoObjectType):
         model = Currency
         fields = "__all__"
 
+    def resolve_name(self, info):
+        cached_data = Currency.get_cached_name_and_symbol(self.code)
+        return cached_data['name'] if cached_data else self.name
+
+    def resolve_symbol(self, info):
+        cached_data = Currency.get_cached_name_and_symbol(self.code)
+        return cached_data['symbol'] if cached_data else self.symbol
+
 class QRCodeType(DjangoObjectType):
     class Meta:
         model = QRCode
