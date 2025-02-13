@@ -43,8 +43,29 @@ INSTALLED_APPS = [
     'basic',
     'graphql_jwt',
     'django_filters',
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     # 'psycopg2-binary',
 ]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    
+
+]
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 GRAPHENE = {
     'SCHEMA': 'basic.schema.schema',
@@ -53,10 +74,6 @@ GRAPHENE = {
     ],
 }
 
-AUTHENTICATION_BACKENDS = [
-    'graphql_jwt.backends.JSONWebTokenBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
 
 GRAPHQL_JWT = {
     'JWT_SECRET_KEY': SECRET_KEY,  # Ensure SECRET_KEY is defined in your settings
@@ -85,19 +102,7 @@ GRAPHQL_JWT = {
 #     'http://localhost:3000',  # Example frontend URL
 # ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'graphql_jwt.middleware.JSONWebTokenMiddleware',
-    
 
-]
 
 ROOT_URLCONF = 'core.urls'
 
