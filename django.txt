@@ -42,7 +42,7 @@ pip freeze > requirement.txt
 python3 manage.py createsuperuser
 
 
-
+************************************************************************DATABASES****************************************************************
 
 OneToOne  
 from django.db import models
@@ -123,5 +123,51 @@ CREATE TABLE Course_Student (
     FOREIGN KEY (course_id) REFERENCES Course(id) ON DELETE CASCADE,
     FOREIGN KEY (student_id) REFERENCES Student(id) ON DELETE CASCADE
 );
+
+====*********************************END-OF-DATABASES********************************====
+
+
+**************************************************************************PLUGINS******************************************************************************
+pip install graphene-django
+pip install psycopg2-binary
+pip show psycopg2
+pip install django-redis
+pip install channels channels_redis
+pip install django-graphql-jwt
+pip install django-filter
+pip install django-elasticsearch-dsl
+pip install "qrcode[pil]"
+pip install pyzbar Pillow
+pip install py4j
+wget https://dl.min.io/server/minio/release/linux-amd64/minio
+chmod +x minio
+sudo mv minio /usr/local/bin/
+sudo mkdir /data
+sudo chmod -R 775 /data
+sudo mkdir /data
+sudo chmod -R 775 /data
+minio dig in for more
+
+pip install celery
+
+$ pip install "celery[redis]"
+
+$ pip install "celery[redis,auth,msgpack]"
+
+pip install kombu
+
+pip install --upgrade redis
+
+pip list
+
+ pip install --upgrade <package>
+ pip install <package>==<version>
+
+ pip install --upgrade pip
+
+
+
+
+
 
 

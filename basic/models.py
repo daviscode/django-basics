@@ -1,6 +1,8 @@
 from django.db import models
 import uuid
 from django.core.cache import cache
+from django_elasticsearch_dsl import Document, fields
+from django_elasticsearch_dsl.registries import registry
 
 class Currency(models.Model):
     # Primary key field that auto-increments
@@ -156,7 +158,25 @@ class Product(models.Model):
                 name='category_format_check'
             ),
         ]
+        
 
     def __str__(self):
         return self.name
+    
+@registry.register_document
+class ProductDocument(Document):
+    class Index:
+        name = 'products'  # Name of the Elasticsearch index
+
+    class Django:
+        model = Product  # The model associated with this document
+
+        # Fields to be indexed in Elasticsearch
+        fields = [
+            'id',
+            'name',
+            'price',
+            'active',
+            'created_at',
+        ]
     

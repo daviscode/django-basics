@@ -307,6 +307,7 @@ class Mutation(graphene.ObjectType):
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()  # Obtain JWT token
     verify_token = graphql_jwt.Verify.Field()  # Verify JWT token
     refresh_token = graphql_jwt.Refresh.Field()  # Refresh JWT token
+    revoke_token = graphql_jwt.Revoke.Field()
 
     create_currency = CreateCurrency.Field()
     update_currency = UpdateCurrency.Field()

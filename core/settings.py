@@ -30,6 +30,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200',  # Elasticsearch server URL
+    },
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +50,7 @@ INSTALLED_APPS = [
     'graphql_jwt',
     'django_filters',
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'django_elasticsearch_dsl',  # Add the Elasticsearch app
     # 'psycopg2-binary',
 ]
 
