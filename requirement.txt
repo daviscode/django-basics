@@ -2,6 +2,8 @@ asgiref==3.8.1
 channels==4.2.0
 channels_redis==4.2.1
 Django==5.1.6
+django-filter==24.3
+django-graphql-jwt==0.4.0
 django-redis==5.4.0
 graphene==3.4.3
 graphene-django==3.2.2
@@ -10,6 +12,7 @@ graphql-relay==3.2.0
 msgpack==1.1.0
 promise==2.3
 psycopg2-binary==2.9.10
+PyJWT==2.10.1
 python-dateutil==2.9.0.post0
 redis==5.2.1
 six==1.17.0

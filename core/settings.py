@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-9t2%90ht=bnzyk$78q9!4z0dochu0+tbprdb3@0z_)tuz!j5j-'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,12 +41,49 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles', 
     'graphene_django',
     'basic',
+    'graphql_jwt',
+    'django_filters',
     # 'psycopg2-binary',
 ]
 
 GRAPHENE = {
     'SCHEMA': 'basic.schema.schema',
+    "MIDDLEWARE": [
+        "graphql_jwt.middleware.JSONWebTokenMiddleware",
+    ],
 }
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+GRAPHQL_JWT = {
+    'JWT_SECRET_KEY': SECRET_KEY,  # Ensure SECRET_KEY is defined in your settings
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA': timedelta(days=1),  # Token expiration time
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),  # Refresh token expiration time
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
+    'JWT_ALLOW_ANY_CLASSES': [
+        'graphql_jwt.mutations.ObtainJSONWebToken',
+        'graphql_jwt.mutations.Verify',
+        'graphql_jwt.mutations.Refresh',
+    ],
+}
+
+
+
+
+
+# Configure the foolowing commented codes ukienda production
+# ALLOWED_HOSTS = ['your-domain.com', 'localhost', '127.0.0.1']
+
+# # Optional: CORS configuration
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',  # Example frontend URL
+# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +93,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    
+
 ]
 
 ROOT_URLCONF = 'core.urls'
